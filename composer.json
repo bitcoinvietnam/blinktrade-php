@@ -1,0 +1,24 @@
+{
+    "name": "bitcoinvietnam/blinktrade-php",
+    "description": "PHP library for interacting with the Blinktrade API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aleksander Winter",
+            "email": "alex@bitcoinvietnam.com.vn"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.2",
+        "jms/serializer": "^1.1",
+        "doctrine/collections": "^1.3"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BitcoinVietnam\\Blinktrade\\": "src/"
+        }
+    }
+}
