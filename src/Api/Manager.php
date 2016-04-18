@@ -21,6 +21,7 @@
 
 namespace BitcoinVietnam\Blinktrade\Api;
 use BitcoinVietnam\Blinktrade\Request;
+use BitcoinVietnam\Blinktrade\Helper;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use JMS\Serializer\SerializerBuilder;
 
@@ -41,6 +42,14 @@ class Manager
     public function request()
     {
         return isset($this->factory[__FUNCTION__]) ? $this->factory[__FUNCTION__] : ($this->factory[__FUNCTION__] = new Request\Factory());
+    }
+
+    /**
+     * @return Helper\Factory
+     */
+    public function helper()
+    {
+        return isset($this->factory[__FUNCTION__]) ? $this->factory[__FUNCTION__] : ($this->factory[__FUNCTION__] = new Helper\Factory());
     }
 
     /**

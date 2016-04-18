@@ -23,10 +23,10 @@ namespace BitcoinVietnam\Blinktrade\Response\GetBalance;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Vbtc
+ * Class Foxbit
  * @package BitcoinVietnam\Blinktrade\Response\GetBalance
  */
-class Vbtc implements BalanceInterface
+class Foxbit implements BalanceInterface
 {
     /**
      * @Serializer\SerializedName("BTC_locked")
@@ -36,18 +36,18 @@ class Vbtc implements BalanceInterface
     private $btcLocked;
 
     /**
-     * @Serializer\SerializedName("VND_locked")
+     * @Serializer\SerializedName("BRL_locked")
      * @Serializer\Type("float")
      * @var float
      */
-    private $vndLocked;
+    private $brlLocked;
 
     /**
-     * @Serializer\SerializedName("VND")
+     * @Serializer\SerializedName("BRL")
      * @Serializer\Type("float")
      * @var float
      */
-    private $vnd;
+    private $brl;
 
     /**
      * @Serializer\SerializedName("BTC")
@@ -75,33 +75,33 @@ class Vbtc implements BalanceInterface
     /**
      * @return float
      */
-    public function getVndLocked()
+    public function getBrlLocked()
     {
-        return $this->vndLocked;
+        return $this->brlLocked;
     }
 
     /**
-     * @param float $vndLocked
+     * @param float $brlLocked
      */
-    public function setVndLocked($vndLocked)
+    public function setBrlLocked($brlLocked)
     {
-        $this->vndLocked = $vndLocked;
+        $this->brlLocked = $brlLocked;
     }
 
     /**
      * @return float
      */
-    public function getVnd()
+    public function getBrl()
     {
-        return $this->vnd;
+        return $this->brl;
     }
 
     /**
-     * @param float $vnd
+     * @param float $brl
      */
-    public function setVnd($vnd)
+    public function setBrl($brl)
     {
-        $this->vnd = $vnd;
+        $this->brl = $brl;
     }
 
     /**
@@ -125,7 +125,7 @@ class Vbtc implements BalanceInterface
      */
     public function getFiat()
     {
-        return $this->getVnd();
+        return $this->getBrl();
     }
 
     /**
@@ -133,6 +133,6 @@ class Vbtc implements BalanceInterface
      */
     public function getFiatLocked()
     {
-        return $this->getVndLocked();
+        return $this->getBrlLocked();
     }
 }

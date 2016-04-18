@@ -19,21 +19,21 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Response\GetOrders;
+namespace BitcoinVietnam\Blinktrade\Response\GetWithdrawals;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Response
- * @package BitcoinVietnam\Blinktrade\Response\GetOrders
+ * @package BitcoinVietnam\Blinktrade\Response\GetWithdrawals
  */
 class Response
 {
     /**
-     * @Serializer\SerializedName("OrdListGrp")
-     * @Serializer\Type("array<BitcoinVietnam\Blinktrade\Response\GetOrders\Order>")
-     * @var Order[]
+     * @Serializer\SerializedName("WithdrawListReqID")
+     * @Serializer\Type("integer")
+     * @var int
      */
-    private $ordListGrp;
+    private $withdrawReqId;
 
     /**
      * @Serializer\SerializedName("PageSize")
@@ -43,11 +43,11 @@ class Response
     private $pageSize;
 
     /**
-     * @Serializer\SerializedName("OrdersReqID")
-     * @Serializer\Type("integer")
-     * @var int
+     * @Serializer\SerializedName("WithdrawListGrp")
+     * @Serializer\Type("array<BitcoinVietnam\Blinktrade\Response\GetWithdrawals\Withdrawal>")
+     * @var array
      */
-    private $ordersReqId;
+    private $withdrawListGrp;
 
     /**
      * @Serializer\SerializedName("MsgType")
@@ -71,19 +71,19 @@ class Response
     private $columns;
 
     /**
-     * @return array
+     * @return int
      */
-    public function getOrdListGrp()
+    public function getWithdrawReqId()
     {
-        return $this->ordListGrp;
+        return $this->withdrawReqId;
     }
 
     /**
-     * @param array $ordListGrp
+     * @param int $withdrawReqId
      */
-    public function setOrdListGrp($ordListGrp)
+    public function setWithdrawalReqId($withdrawReqId)
     {
-        $this->ordListGrp = $ordListGrp;
+        $this->withdrawReqId = $withdrawReqId;
     }
 
     /**
@@ -103,19 +103,19 @@ class Response
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getOrdersReqId()
+    public function getWithdrawListGrp()
     {
-        return $this->ordersReqId;
+        return $this->withdrawListGrp;
     }
 
     /**
-     * @param int $ordersReqId
+     * @param array $withdrawListGrp
      */
-    public function setOrdersReqId($ordersReqId)
+    public function setWithdrawListGrp($withdrawListGrp)
     {
-        $this->ordersReqId = $ordersReqId;
+        $this->withdrawListGrp = $withdrawListGrp;
     }
 
     /**

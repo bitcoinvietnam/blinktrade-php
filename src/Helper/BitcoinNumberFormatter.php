@@ -19,43 +19,29 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
+namespace BitcoinVietnam\Blinktrade\Helper;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class BitcoinNumberFormatter
+ * @package BitcoinVietnam\Blinktrade
  */
-class Factory
+class BitcoinNumberFormatter
 {
     /**
-     * @return CreateOrder
+     * @param int $value
+     * @return float
      */
-    public function createOrder()
+    public function satoshiToBtc($value)
     {
-        return new CreateOrder();
+        return (real) $value / 100000000;
     }
 
     /**
-     * @return GetBalance
+     * @param float $value
+     * @return int
      */
-    public function getBalance()
+    public function btcToSatoshi($value)
     {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        return (int) $value * 100000000;
     }
 }

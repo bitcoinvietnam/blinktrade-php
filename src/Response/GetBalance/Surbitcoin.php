@@ -23,10 +23,10 @@ namespace BitcoinVietnam\Blinktrade\Response\GetBalance;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Vbtc
+ * Class Surbitcoin
  * @package BitcoinVietnam\Blinktrade\Response\GetBalance
  */
-class Vbtc implements BalanceInterface
+class Surbitcoin implements BalanceInterface
 {
     /**
      * @Serializer\SerializedName("BTC_locked")
@@ -36,18 +36,18 @@ class Vbtc implements BalanceInterface
     private $btcLocked;
 
     /**
-     * @Serializer\SerializedName("VND_locked")
+     * @Serializer\SerializedName("VEF_locked")
      * @Serializer\Type("float")
      * @var float
      */
-    private $vndLocked;
+    private $vefLocked;
 
     /**
-     * @Serializer\SerializedName("VND")
+     * @Serializer\SerializedName("VEF")
      * @Serializer\Type("float")
      * @var float
      */
-    private $vnd;
+    private $vef;
 
     /**
      * @Serializer\SerializedName("BTC")
@@ -75,33 +75,33 @@ class Vbtc implements BalanceInterface
     /**
      * @return float
      */
-    public function getVndLocked()
+    public function getVefLocked()
     {
-        return $this->vndLocked;
+        return $this->vefLocked;
     }
 
     /**
-     * @param float $vndLocked
+     * @param float $vefLocked
      */
-    public function setVndLocked($vndLocked)
+    public function setVefLocked($vefLocked)
     {
-        $this->vndLocked = $vndLocked;
+        $this->vefLocked = $vefLocked;
     }
 
     /**
      * @return float
      */
-    public function getVnd()
+    public function getVef()
     {
-        return $this->vnd;
+        return $this->vef;
     }
 
     /**
-     * @param float $vnd
+     * @param float $vef
      */
-    public function setVnd($vnd)
+    public function setVef($vef)
     {
-        $this->vnd = $vnd;
+        $this->vef = $vef;
     }
 
     /**
@@ -125,7 +125,7 @@ class Vbtc implements BalanceInterface
      */
     public function getFiat()
     {
-        return $this->getVnd();
+        return $this->getVef();
     }
 
     /**
@@ -133,6 +133,6 @@ class Vbtc implements BalanceInterface
      */
     public function getFiatLocked()
     {
-        return $this->getVndLocked();
+        return $this->getVefLocked();
     }
 }

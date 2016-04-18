@@ -29,11 +29,46 @@ use JMS\Serializer\Annotation as Serializer;
 class Response
 {
     /**
+     * @Serializer\SerializedName("1")
+     * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Surbitcoin")
+     * @var Surbitcoin
+     */
+    private $surbitcoin;
+
+    /**
      * @Serializer\SerializedName("3")
      * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Vbtc")
      * @var Vbtc
      */
     private $vbtc;
+
+    /**
+     * @Serializer\SerializedName("4")
+     * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Foxbit")
+     * @var Foxbit
+     */
+    private $foxbit;
+
+    /**
+     * @Serializer\SerializedName("5")
+     * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Testnet")
+     * @var Testnet
+     */
+    private $testnet;
+
+    /**
+     * @Serializer\SerializedName("8")
+     * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Urdubit")
+     * @var Urdubit
+     */
+    private $urdubit;
+
+    /**
+     * @Serializer\SerializedName("9")
+     * @Serializer\Type("BitcoinVietnam\Blinktrade\Response\GetBalance\Chilebit")
+     * @var Chilebit
+     */
+    private $chilebit;
 
     /**
      * @Serializer\SerializedName("MsgType")
@@ -57,7 +92,23 @@ class Response
     private $balanceReqId;
 
     /**
-     * @return array
+     * @return Surbitcoin
+     */
+    public function getSurbitcoin()
+    {
+        return $this->surbitcoin;
+    }
+
+    /**
+     * @param array $surbitcoin
+     */
+    public function setSurbitcoin($surbitcoin)
+    {
+        $this->surbitcoin = $surbitcoin;
+    }
+
+    /**
+     * @return Vbtc
      */
     public function getVbtc()
     {
@@ -70,6 +121,70 @@ class Response
     public function setVbtc($vbtc)
     {
         $this->vbtc = $vbtc;
+    }
+
+    /**
+     * @return Foxbit
+     */
+    public function getFoxbit()
+    {
+        return $this->foxbit;
+    }
+
+    /**
+     * @param array $foxbit
+     */
+    public function setFoxbit($foxbit)
+    {
+        $this->foxbit = $foxbit;
+    }
+
+    /**
+     * @return Testnet
+     */
+    public function getTestnet()
+    {
+        return $this->testnet;
+    }
+
+    /**
+     * @param array $testnet
+     */
+    public function setTestnet($testnet)
+    {
+        $this->testnet = $testnet;
+    }
+
+    /**
+     * @return Urdubit
+     */
+    public function getUrdubit()
+    {
+        return $this->urdubit;
+    }
+
+    /**
+     * @param array $urdubit
+     */
+    public function setUrdubit($urdubit)
+    {
+        $this->urdubit = $urdubit;
+    }
+
+    /**
+     * @return Chilebit
+     */
+    public function getChilebit()
+    {
+        return $this->chilebit;
+    }
+
+    /**
+     * @param array $chilebit
+     */
+    public function setChilebit($chilebit)
+    {
+        $this->chilebit = $chilebit;
     }
 
     /**

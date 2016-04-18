@@ -19,43 +19,31 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
+namespace BitcoinVietnam\Blinktrade\Response\GetBalance;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Interface BalanceInterface
+ * @package BitcoinVietnam\Blinktrade\Response\GetBalance
  */
-class Factory
+interface BalanceInterface
 {
     /**
-     * @return CreateOrder
+     * @return float
      */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
+    public function getBtcLocked();
 
     /**
-     * @return GetBalance
+     * @return float
      */
-    public function getBalance()
-    {
-        return new GetBalance();
-    }
+    public function getFiatLocked();
 
     /**
-     * @return GetOrders
+     * @return float
      */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
+    public function getFiat();
 
     /**
-     * @return GetWithdrawals
+     * @return float
      */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
-    }
+    public function getBtc();
 }

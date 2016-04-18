@@ -19,43 +19,24 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
+namespace BitcoinVietnam\Blinktrade\Helper;
 
 /**
  * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * @package BitcoinVietnam\Blinktrade\Helper
  */
 class Factory
 {
     /**
-     * @return CreateOrder
+     * @var array
      */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
+    private $setter;
 
     /**
-     * @return GetBalance
+     * @return BitcoinNumberFormatter
      */
-    public function getBalance()
+    public function bitcoinNumberFormatter()
     {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        return isset($this->setter[__FUNCTION__]) ? $this->setter[__FUNCTION__] : ($this->setter[__FUNCTION__] = new BitcoinNumberFormatter());
     }
 }

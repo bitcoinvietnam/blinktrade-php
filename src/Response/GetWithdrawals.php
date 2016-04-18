@@ -19,43 +19,36 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
+namespace BitcoinVietnam\Blinktrade\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class GetWithdrawals
+ * @package BitcoinVietnam\Blinktrade\Response
  */
-class Factory
+class GetWithdrawals extends BaseResponse
 {
     /**
-     * @return CreateOrder
+     * @Serializer\SerializedName("Responses")
+     * @Serializer\Type("ArrayCollection<BitcoinVietnam\Blinktrade\Response\GetWithdrawals\Response>")
+     * @var ArrayCollection
      */
-    public function createOrder()
+    private $responses;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getResponses()
     {
-        return new CreateOrder();
+        return $this->responses;
     }
 
     /**
-     * @return GetBalance
+     * @param ArrayCollection $responses
      */
-    public function getBalance()
+    public function setResponses($responses)
     {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->responses = $responses;
     }
 }

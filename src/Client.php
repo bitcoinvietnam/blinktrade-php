@@ -24,6 +24,7 @@ use BitcoinVietnam\Blinktrade\Api\Manager as ApiManager;
 use BitcoinVietnam\Blinktrade\Request\RequestInterface;
 use BitcoinVietnam\Blinktrade\Response\GetBalance;
 use BitcoinVietnam\Blinktrade\Response\GetOrders;
+use BitcoinVietnam\Blinktrade\Response\GetWithdrawals;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
@@ -68,25 +69,89 @@ class Client
     {
         $this->key = (string) trim($key);
         $this->secret = (string) trim($secret);
-        $this->brokerId = $brokerId;
-        $this->url = 'https://api.blinktrade.com/tapi/v1/message';
+        $this->brokerId = (int) $brokerId;
+        $this->url = Blinktrade::URL;
     }
     
     // REQUESTS ========================
 
+    // todo
+    public function createOrder() {}
+
+    // todo
+    public function cancelOrder() {}
+
+    // todo
+    public function createBitcoinDeposit() {}
+
+    // todo
+    public function createBitcoinWithdrawal() {}
+
+    // todo
+    public function createFiatDeposit() {}
+
+    // todo
+    public function createFiatWithdrawal() {}
+
+    // todo
+    public function getWithdrawals($statusList = null, $page = 0, $pageSize = 100)
+    {
+        $request = $this->apiM()->request()->getWithdrawals();
+
+        if (!$statusList) {
+            $statusList = [
+                Blinktrade::WITHDRAW_STATUS_PENDING,
+                Blinktrade::WITHDRAW_STATUS_IN_PROGRESS,
+                Blinktrade::WITHDRAW_STATUS_COMPLETED,
+                Blinktrade::WITHDRAW_STATUS_CANCELLED
+            ];
+        }
+
+        $request->setStatusList((array) $statusList);
+        $request->setPage((int) $page);
+        $request->setPageSize((int) $pageSize);
+
+        /** @var GetWithdrawals $response */
+        $response = $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\GetWithdrawals',
+            'json'
+        );
+
+        return $response->getResponses()->first()->getWithdrawListGrp();
+    }
+
     /**
-     * Get balance
-     *
-     * @return GetBalance\Response
+     * @return GetBalance\BalanceInterface|null
      */
     public function getBalance()
     {
-        $response = $this->sendRequest($this->apiM()->request()->getBalance())->getBody()->getContents();
-
         /** @var GetBalance $responses */
-        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetBalance', 'json');
+        $responses = $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($this->apiM()->request()->getBalance())->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\GetBalance',
+            'json'
+        );
 
-        return $responses->getResponses()->first();
+        /** @var GetBalance\Response $response */
+        $response = $responses->getResponses()->first();
+
+        switch ($this->brokerId) {
+            case Blinktrade::BROKERID_SURBITCOIN:
+                return $response->getSurbitcoin();
+            case Blinktrade::BROKERID_VBTC:
+                return $response->getVbtc();
+            case Blinktrade::BROKERID_FOXBIT:
+                return $response->getFoxbit();
+            case Blinktrade::BROKERID_TESTNET:
+                return $response->getTestnet();
+            case Blinktrade::BROKERID_URDUBIT:
+                return $response->getUrdubit();
+            case Blinktrade::BROKERID_CHILEBIT:
+                return $response->getChilebit();
+        }
+
+        return null;
     }
 
     /**
@@ -102,7 +167,6 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
         $request->setFilter(['has_leaves_qty eq 1']);
-
         $response = $this->sendRequest($request)->getBody()->getContents();
 
         /** @var GetOrders $responses */
@@ -124,7 +188,6 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
         $request->setFilter(['has_cum_qty eq 1']);
-
         $response = $this->sendRequest($request)->getBody()->getContents();
 
         /** @var GetOrders $responses */
@@ -146,7 +209,6 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
         $request->setFilter(['has_cxl_qty eq 1']);
-
         $response = $this->sendRequest($request)->getBody()->getContents();
 
         /** @var GetOrders $responses */
@@ -172,7 +234,11 @@ class Client
             'Signature' => hash_hmac('SHA256', $nonce, $this->secret)
         ];
 
-        return $this->apiM()->guzzle()->request('POST', $this->url, ['headers' => $headers, 'json' => $this->apiM()->serializer()->toArray($request)]);
+        return $this->apiM()->guzzle()->request(
+            'POST',
+            $this->url,
+            ['headers' => $headers, 'json' => $this->apiM()->serializer()->toArray($request)]
+        );
     }
 
     /**
