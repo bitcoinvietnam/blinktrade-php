@@ -1,6 +1,8 @@
 {
     "name": "bitcoinvietnam/blinktrade-php",
     "description": "PHP library for interacting with the Blinktrade API",
+    "version": "0.0.1-alpha",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
