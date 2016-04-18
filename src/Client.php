@@ -90,9 +90,11 @@ class Client
     }
 
     /**
+     * Get open orders
+     *
      * @param int $page
      * @param int $pageSize
-     * @return GetOrders\Response
+     * @return GetOrders\Order[]
      */
     public function getOpenOrders($page = 0, $pageSize = 100)
     {
@@ -106,7 +108,51 @@ class Client
         /** @var GetOrders $responses */
         $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
 
-        return $responses->getResponses()->first();
+        return $responses->getResponses()->first()->getOrdListGrp();
+    }
+
+    /**
+     * Get closed orders
+     *
+     * @param int $page
+     * @param int $pageSize
+     * @return GetOrders\Order[]
+     */
+    public function getExecutedOrders($page = 0, $pageSize = 100)
+    {
+        $request = $this->apiM()->request()->getOrders();
+        $request->setPage((int) $page);
+        $request->setPageSize((int) $pageSize);
+        $request->setFilter(['has_cum_qty eq 1']);
+
+        $response = $this->sendRequest($request)->getBody()->getContents();
+
+        /** @var GetOrders $responses */
+        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
+
+        return $responses->getResponses()->first()->getOrdListGrp();
+    }
+
+    /**
+     * Get closed orders
+     *
+     * @param int $page
+     * @param int $pageSize
+     * @return GetOrders\Order[]
+     */
+    public function getCancelledOrders($page = 0, $pageSize = 100)
+    {
+        $request = $this->apiM()->request()->getOrders();
+        $request->setPage((int) $page);
+        $request->setPageSize((int) $pageSize);
+        $request->setFilter(['has_cxl_qty eq 1']);
+
+        $response = $this->sendRequest($request)->getBody()->getContents();
+
+        /** @var GetOrders $responses */
+        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
+
+        return $responses->getResponses()->first()->getOrdListGrp();
     }
     
     // REQUESTS END ====================

@@ -30,7 +30,7 @@ class Response
 {
     /**
      * @Serializer\SerializedName("OrdListGrp")
-     * @Serializer\Type("array")
+     * @Serializer\Type("array<BitcoinVietnam\Blinktrade\Response\GetOrders\Order>")
      * @var array
      */
     private $ordListGrp;
