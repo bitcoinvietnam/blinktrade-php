@@ -18,6 +18,7 @@
     "require-dev": {
         "symfony/var-dumper": "^3.0"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "BitcoinVietnam\\Blinktrade\\": "src/"
