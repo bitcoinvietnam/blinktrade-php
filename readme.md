@@ -5,7 +5,7 @@ Add the following to your composer.json:
 ```json
 {
     "require": {
-        "bitcoinvietnam/blinktrade-php": "@dev
+        "bitcoinvietnam/blinktrade-php": "@dev"
     }
 }
 ```
