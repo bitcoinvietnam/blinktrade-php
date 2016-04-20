@@ -22,6 +22,8 @@
 namespace BitcoinVietnam\Blinktrade;
 use BitcoinVietnam\Blinktrade\Api\Manager as ApiManager;
 use BitcoinVietnam\Blinktrade\Request\RequestInterface;
+use BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit;
+use BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal;
 use BitcoinVietnam\Blinktrade\Response\GetBalance;
 use BitcoinVietnam\Blinktrade\Response\GetOrders;
 use BitcoinVietnam\Blinktrade\Response\GetWithdrawals;
@@ -70,7 +72,7 @@ class Client
         $this->key = (string) trim($key);
         $this->secret = (string) trim($secret);
         $this->brokerId = (int) $brokerId;
-        $this->url = Blinktrade::URL;
+        $this->url = Blinktrade::BROKERID_TESTNET === $this->brokerId ? Blinktrade::URL_TESTNET : Blinktrade::URL;
     }
     
     // REQUESTS ========================
@@ -81,11 +83,38 @@ class Client
     // todo
     public function cancelOrder() {}
 
-    // todo
-    public function createBitcoinDeposit() {}
+    /**
+     * @return CreateBitcoinDeposit
+     */
+    public function createBitcoinDeposit() 
+    {
+        $request = $this->apiM()->request()->createBitcoinDeposit();
+        $request->setBrokerId($this->brokerId);
 
-    // todo
-    public function createBitcoinWithdrawal() {}
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\CreateBitcoinDeposit',
+            'json'
+        );
+    }
+
+    /**
+     * @param $amount
+     * @param $wallet
+     * @return CreateBitcoinWithdrawal
+     */
+    public function createBitcoinWithdrawal($amount, $wallet) 
+    {
+        $request = $this->apiM()->request()->createBitcoinWithdrawal();
+        $request->setAmount((int) $amount);
+        $request->getData()->setWallet((string) $wallet);
+
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\CreateBitcoinWithdrawal',
+            'json'
+        );
+    }
 
     // todo
     public function createFiatDeposit() {}
@@ -93,7 +122,12 @@ class Client
     // todo
     public function createFiatWithdrawal() {}
 
-    // todo
+    /**
+     * @param array $statusList
+     * @param int $page
+     * @param int $pageSize
+     * @return GetWithdrawals
+     */
     public function getWithdrawals($statusList = null, $page = 0, $pageSize = 100)
     {
         $request = $this->apiM()->request()->getWithdrawals();
@@ -111,47 +145,24 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
 
-        /** @var GetWithdrawals $response */
-        $response = $this->apiM()->serializer()->deserialize(
+        return $this->apiM()->serializer()->deserialize(
             $this->sendRequest($request)->getBody()->getContents(),
             'BitcoinVietnam\\Blinktrade\\Response\\GetWithdrawals',
             'json'
         );
-
-        return $response->getResponses()->first()->getWithdrawListGrp();
     }
 
     /**
-     * @return GetBalance\BalanceInterface|null
+     * @return GetBalance
      */
     public function getBalance()
     {
         /** @var GetBalance $responses */
-        $responses = $this->apiM()->serializer()->deserialize(
+        return $this->apiM()->serializer()->deserialize(
             $this->sendRequest($this->apiM()->request()->getBalance())->getBody()->getContents(),
             'BitcoinVietnam\\Blinktrade\\Response\\GetBalance',
             'json'
         );
-
-        /** @var GetBalance\Response $response */
-        $response = $responses->getResponses()->first();
-
-        switch ($this->brokerId) {
-            case Blinktrade::BROKERID_SURBITCOIN:
-                return $response->getSurbitcoin();
-            case Blinktrade::BROKERID_VBTC:
-                return $response->getVbtc();
-            case Blinktrade::BROKERID_FOXBIT:
-                return $response->getFoxbit();
-            case Blinktrade::BROKERID_TESTNET:
-                return $response->getTestnet();
-            case Blinktrade::BROKERID_URDUBIT:
-                return $response->getUrdubit();
-            case Blinktrade::BROKERID_CHILEBIT:
-                return $response->getChilebit();
-        }
-
-        return null;
     }
 
     /**
@@ -159,7 +170,7 @@ class Client
      *
      * @param int $page
      * @param int $pageSize
-     * @return GetOrders\Order[]
+     * @return GetOrders
      */
     public function getOpenOrders($page = 0, $pageSize = 100)
     {
@@ -167,12 +178,12 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
         $request->setFilter(['has_leaves_qty eq 1']);
-        $response = $this->sendRequest($request)->getBody()->getContents();
 
-        /** @var GetOrders $responses */
-        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
-
-        return $responses->getResponses()->first()->getOrdListGrp();
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\GetOrders',
+            'json'
+        );
     }
 
     /**
@@ -180,7 +191,7 @@ class Client
      *
      * @param int $page
      * @param int $pageSize
-     * @return GetOrders\Order[]
+     * @return GetOrders
      */
     public function getExecutedOrders($page = 0, $pageSize = 100)
     {
@@ -190,10 +201,11 @@ class Client
         $request->setFilter(['has_cum_qty eq 1']);
         $response = $this->sendRequest($request)->getBody()->getContents();
 
-        /** @var GetOrders $responses */
-        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
-
-        return $responses->getResponses()->first()->getOrdListGrp();
+        return $this->apiM()->serializer()->deserialize(
+            $response,
+            'BitcoinVietnam\\Blinktrade\\Response\\GetOrders',
+            'json'
+        );
     }
 
     /**
@@ -201,7 +213,7 @@ class Client
      *
      * @param int $page
      * @param int $pageSize
-     * @return GetOrders\Order[]
+     * @return GetOrders
      */
     public function getCancelledOrders($page = 0, $pageSize = 100)
     {
@@ -209,12 +221,12 @@ class Client
         $request->setPage((int) $page);
         $request->setPageSize((int) $pageSize);
         $request->setFilter(['has_cxl_qty eq 1']);
-        $response = $this->sendRequest($request)->getBody()->getContents();
 
-        /** @var GetOrders $responses */
-        $responses = $this->apiM()->serializer()->deserialize($response, 'BitcoinVietnam\\Blinktrade\\Response\\GetOrders', 'json');
-
-        return $responses->getResponses()->first()->getOrdListGrp();
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\GetOrders',
+            'json'
+        );
     }
     
     // REQUESTS END ====================

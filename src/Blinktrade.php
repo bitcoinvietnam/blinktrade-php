@@ -30,6 +30,9 @@ class Blinktrade
     /** URL for API requests */
     const URL = 'https://api.blinktrade.com/tapi/v1/message';
 
+    /** URL for testnet API requests */
+    const URL_TESTNET = 'https://testnet.api.blinktrade.com/tapi/v1/message';
+
     // Exchanges
 
     /** Surbitcoin */

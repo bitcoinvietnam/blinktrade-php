@@ -20,62 +20,90 @@
  */
 
 namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
+ * Class CreateBitcoinDeposit
  * @package BitcoinVietnam\Blinktrade\Request
  */
-class Factory
+class CreateBitcoinDeposit extends BaseRequest
 {
     /**
-     * @return CreateBitcoinDeposit
+     * @Serializer\SerializedName("DepositReqID")
+     * @Serializer\Type("integer")
+     * @var int
      */
-    public function createBitcoinDeposit()
+    private $depositReqId;
+
+    /**
+     * @Serializer\SerializedName("Currency")
+     * @Serializer\Type("string")
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * @Serializer\SerializedName("BrokerID")
+     * @Serializer\Type("integer")
+     * @var int
+     */
+    private $brokerId;
+
+    /**
+     * CreateBitcoinDeposit constructor.
+     */
+    public function __construct()
     {
-        return new CreateBitcoinDeposit();
+        $this->setMsgType('U18');
+        $this->setDepositReqId(1);
+        $this->setCurrency('BTC');
     }
 
     /**
-     * @return CreateBitcoinWithdrawal
+     * @return mixed
      */
-    public function createBitcoinWithdrawal()
+    public function getDepositReqId()
     {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
+        return $this->depositReqId;
     }
 
     /**
-     * @return CreateOrder
+     * @param mixed $depositReqId
      */
-    public function createOrder()
+    public function setDepositReqId($depositReqId)
     {
-        return new CreateOrder();
+        $this->depositReqId = $depositReqId;
     }
 
     /**
-     * @return GetBalance
+     * @return mixed
      */
-    public function getBalance()
+    public function getCurrency()
     {
-        return new GetBalance();
+        return $this->currency;
     }
 
     /**
-     * @return GetOrders
+     * @param mixed $currency
      */
-    public function getOrders()
+    public function setCurrency($currency)
     {
-        return new GetOrders();
+        $this->currency = $currency;
     }
 
     /**
-     * @return GetWithdrawals
+     * @return mixed
      */
-    public function getWithdrawals()
+    public function getBrokerId()
     {
-        return new GetWithdrawals();
+        return $this->brokerId;
+    }
+
+    /**
+     * @param mixed $brokerId
+     */
+    public function setBrokerId($brokerId)
+    {
+        $this->brokerId = $brokerId;
     }
 }

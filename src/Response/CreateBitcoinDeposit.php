@@ -19,63 +19,36 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+namespace BitcoinVietnam\Blinktrade\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class CreateBitcoinDeposit
+ * @package BitcoinVietnam\Blinktrade\Response
  */
-class Factory
+class CreateBitcoinDeposit extends BaseResponse
 {
     /**
-     * @return CreateBitcoinDeposit
+     * @Serializer\SerializedName("Responses")
+     * @Serializer\Type("ArrayCollection<BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit\Response>")
+     * @var ArrayCollection
      */
-    public function createBitcoinDeposit()
+    private $responses;
+
+    /**
+     * @return mixed
+     */
+    public function getResponses()
     {
-        return new CreateBitcoinDeposit();
+        return $this->responses;
     }
 
     /**
-     * @return CreateBitcoinWithdrawal
+     * @param mixed $responses
      */
-    public function createBitcoinWithdrawal()
+    public function setResponses($responses)
     {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
-    }
-
-    /**
-     * @return CreateOrder
-     */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
-
-    /**
-     * @return GetBalance
-     */
-    public function getBalance()
-    {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->responses = $responses;
     }
 }

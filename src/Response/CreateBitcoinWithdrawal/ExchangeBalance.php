@@ -19,63 +19,35 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+namespace BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class ExchangeBalance
+ * @package BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal
  */
-class Factory
+class ExchangeBalance
 {
     /**
-     * @return CreateBitcoinDeposit
+     * @Serializer\SerializedName("BTC")
+     * @Serializer\Type("int")
+     * @var int
      */
-    public function createBitcoinDeposit()
+    private $btc;
+
+    /**
+     * @return mixed
+     */
+    public function getBtc()
     {
-        return new CreateBitcoinDeposit();
+        return $this->btc;
     }
 
     /**
-     * @return CreateBitcoinWithdrawal
+     * @param mixed $btc
      */
-    public function createBitcoinWithdrawal()
+    public function setBtc($btc)
     {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
-    }
-
-    /**
-     * @return CreateOrder
-     */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
-
-    /**
-     * @return GetBalance
-     */
-    public function getBalance()
-    {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->btc = $btc;
     }
 }

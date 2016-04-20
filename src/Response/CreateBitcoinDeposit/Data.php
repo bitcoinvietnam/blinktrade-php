@@ -19,63 +19,58 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+namespace BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class Data
+ * @package BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit
  */
-class Factory
+class Data
 {
     /**
-     * @return CreateBitcoinDeposit
+     * @Serializer\SerializedName("InputAddress")
+     * @Serializer\Type("string")
+     * @var string
      */
-    public function createBitcoinDeposit()
+    private $inputAddress;
+
+    /**
+     * @Serializer\SerializedName("Destination")
+     * @Serializer\Type("string")
+     * @var string
+     */
+    private $destination;
+
+    /**
+     * @return string
+     */
+    public function getInputAddress()
     {
-        return new CreateBitcoinDeposit();
+        return $this->inputAddress;
     }
 
     /**
-     * @return CreateBitcoinWithdrawal
+     * @param string $inputAddress
      */
-    public function createBitcoinWithdrawal()
+    public function setInputAddress($inputAddress)
     {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
+        $this->inputAddress = $inputAddress;
     }
 
     /**
-     * @return CreateOrder
+     * @return mixed
      */
-    public function createOrder()
+    public function getDestination()
     {
-        return new CreateOrder();
+        return $this->destination;
     }
 
     /**
-     * @return GetBalance
+     * @param mixed $destination
      */
-    public function getBalance()
+    public function setDestination($destination)
     {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->destination = $destination;
     }
 }
