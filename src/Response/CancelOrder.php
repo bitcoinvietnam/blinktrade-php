@@ -9,7 +9,7 @@
  * do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or substantial
- *  portions of the Software.
+ * portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
@@ -19,71 +19,36 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+namespace BitcoinVietnam\Blinktrade\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
- * @package BitcoinVietnam\Blinktrade\Request
+ * Class CancelOrder
+ * @package BitcoinVietnam\Blinktrade\Response
  */
-class Factory
+class CancelOrder extends BaseResponse
 {
     /**
-     * @return CancelOrder
+     * @Serializer\SerializedName("Responses")
+     * @Serializer\Type("array<BitcoinVietnam\Blinktrade\Response\CancelOrder\BalanceResponse, BitcoinVietnam\Blinktrade\Response\CancelOrder\CancelOrderResponse>")
+     * @var ArrayCollection
      */
-    public function cancelOrder()
+    private $responses;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getResponses()
     {
-        return new CancelOrder();
+        return $this->responses;
     }
 
     /**
-     * @return CreateBitcoinDeposit
+     * @param array $responses
      */
-    public function createBitcoinDeposit()
+    public function setResponses($responses)
     {
-        return new CreateBitcoinDeposit();
-    }
-
-    /**
-     * @return CreateBitcoinWithdrawal
-     */
-    public function createBitcoinWithdrawal()
-    {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
-    }
-
-    /**
-     * @return CreateOrder
-     */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
-
-    /**
-     * @return GetBalance
-     */
-    public function getBalance()
-    {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->responses = $responses;
     }
 }

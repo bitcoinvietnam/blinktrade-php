@@ -9,7 +9,7 @@
  * do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or substantial
- *  portions of the Software.
+ * portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
@@ -20,70 +20,42 @@
  */
 
 namespace BitcoinVietnam\Blinktrade\Request;
-use BitcoinVietnam\Blinktrade\Request\CreateBitcoinWithdrawal\Data;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class Factory
+ * Class CancelOrder
  * @package BitcoinVietnam\Blinktrade\Request
  */
-class Factory
+class CancelOrder extends BaseRequest
 {
     /**
-     * @return CancelOrder
+     * @Serializer\SerializedName("ClOrdID")
+     * @Serializer\Type("string")
+     * @var string
      */
-    public function cancelOrder()
+    private $clientOrderId;
+
+    /**
+     * CancelOrder constructor.
+     */
+    public function __construct()
     {
-        return new CancelOrder();
+        $this->setMsgType('F');
     }
 
     /**
-     * @return CreateBitcoinDeposit
+     * @return string
      */
-    public function createBitcoinDeposit()
+    public function getClientOrderId()
     {
-        return new CreateBitcoinDeposit();
+        return $this->clientOrderId;
     }
 
     /**
-     * @return CreateBitcoinWithdrawal
+     * @param string $clientOrderId
      */
-    public function createBitcoinWithdrawal()
+    public function setClientOrderId($clientOrderId)
     {
-        $request = new CreateBitcoinWithdrawal();
-        $request->setData(new Data());
-
-        return $request;
-    }
-
-    /**
-     * @return CreateOrder
-     */
-    public function createOrder()
-    {
-        return new CreateOrder();
-    }
-
-    /**
-     * @return GetBalance
-     */
-    public function getBalance()
-    {
-        return new GetBalance();
-    }
-
-    /**
-     * @return GetOrders
-     */
-    public function getOrders()
-    {
-        return new GetOrders();
-    }
-
-    /**
-     * @return GetWithdrawals
-     */
-    public function getWithdrawals()
-    {
-        return new GetWithdrawals();
+        $this->clientOrderId = $clientOrderId;
     }
 }

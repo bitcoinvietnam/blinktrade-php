@@ -9,7 +9,7 @@
  * do so, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all copies or substantial
- *  portions of the Software.
+ * portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
@@ -19,36 +19,14 @@
  * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace BitcoinVietnam\Blinktrade\Response;
-use Doctrine\Common\Collections\ArrayCollection;
+namespace BitcoinVietnam\Blinktrade\Response\CancelOrder;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class CreateBitcoinWithdrawal
- * @package BitcoinVietnam\Blinktrade\Response
+ * Class Foxbit
+ * @package BitcoinVietnam\Blinktrade\Response\CancelOrder
  */
-class CreateBitcoinWithdrawal extends BaseResponse
+class Foxbit extends ExchangeBalance
 {
-    /**
-     * @Serializer\SerializedName("Responses")
-     * @Serializer\Type("ArrayCollection<BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal\WithdrawalResponse, BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal\BalanceResponse>")
-     * @var ArrayCollection
-     */
-    private $responses;
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
-     * @param mixed $responses
-     */
-    public function setResponses($responses)
-    {
-        $this->responses = $responses;
-    }
 }

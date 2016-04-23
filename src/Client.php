@@ -22,6 +22,7 @@
 namespace BitcoinVietnam\Blinktrade;
 use BitcoinVietnam\Blinktrade\Api\Manager as ApiManager;
 use BitcoinVietnam\Blinktrade\Request\RequestInterface;
+use BitcoinVietnam\Blinktrade\Response\CancelOrder;
 use BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit;
 use BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal;
 use BitcoinVietnam\Blinktrade\Response\GetBalance;
@@ -80,8 +81,21 @@ class Client
     // todo
     public function createOrder() {}
 
-    // todo
-    public function cancelOrder() {}
+    /**
+     * @param string$clientOrderId
+     * @return CancelOrder
+     */
+    public function cancelOrder($clientOrderId)
+    {
+        $request = $this->apiM()->request()->cancelOrder();
+        $request->setClientOrderId((string) $clientOrderId);
+
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\CancelOrder',
+            'json'
+        );
+    }
 
     /**
      * @return CreateBitcoinDeposit
@@ -99,8 +113,8 @@ class Client
     }
 
     /**
-     * @param $amount
-     * @param $wallet
+     * @param int $amount
+     * @param string $wallet
      * @return CreateBitcoinWithdrawal
      */
     public function createBitcoinWithdrawal($amount, $wallet) 
