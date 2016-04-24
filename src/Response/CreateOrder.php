@@ -27,11 +27,11 @@ use JMS\Serializer\Annotation as Serializer;
  * Class CancelOrder
  * @package BitcoinVietnam\Blinktrade\Response
  */
-class CancelOrder extends BaseResponse
+class CreateOrder extends BaseResponse
 {
     /**
      * @Serializer\SerializedName("Responses")
-     * @Serializer\Type("ArrayCollection<BitcoinVietnam\Blinktrade\Response\CancelOrder\BalanceResponse, BitcoinVietnam\Blinktrade\Response\CancelOrder\CancelOrderResponse>")
+     * @Serializer\Type("ArrayCollection<BitcoinVietnam\Blinktrade\Response\CreateOrder\CreateOrderResponse>")
      * @var ArrayCollection
      */
     private $responses;

@@ -25,6 +25,7 @@ use BitcoinVietnam\Blinktrade\Request\RequestInterface;
 use BitcoinVietnam\Blinktrade\Response\CancelOrder;
 use BitcoinVietnam\Blinktrade\Response\CreateBitcoinDeposit;
 use BitcoinVietnam\Blinktrade\Response\CreateBitcoinWithdrawal;
+use BitcoinVietnam\Blinktrade\Response\CreateOrder;
 use BitcoinVietnam\Blinktrade\Response\GetBalance;
 use BitcoinVietnam\Blinktrade\Response\GetOrders;
 use BitcoinVietnam\Blinktrade\Response\GetWithdrawals;
@@ -73,13 +74,34 @@ class Client
         $this->key = (string) trim($key);
         $this->secret = (string) trim($secret);
         $this->brokerId = (int) $brokerId;
-        $this->url = Blinktrade::BROKERID_TESTNET === $this->brokerId ? Blinktrade::URL_TESTNET : Blinktrade::URL;
+        $this->url = Blinktrade::BROKERID_TESTNET === $this->brokerId ? Blinktrade::URL : Blinktrade::URL;
     }
     
     // REQUESTS ========================
 
-    // todo
-    public function createOrder() {}
+    /**
+     * @param string $side
+     * @param int $quantity
+     * @param float $price
+     * @param string $type
+     * @return CreateOrder
+     */
+    public function createOrder($side, $quantity, $price, $type = '2')
+    {
+        $request = $this->apiM()->request()->createOrder();
+        $request->setSymbol(Blinktrade::SYMBOLS[$this->brokerId]);
+        $request->setClientOrderId($this->createUniqueOrderId());
+        $request->setSide((string) $side);
+        $request->setQuantity((int) $quantity);
+        $request->setPrice((int) $price);
+        $request->setType((string) $type);
+
+        return $this->apiM()->serializer()->deserialize(
+            $this->sendRequest($request)->getBody()->getContents(),
+            'BitcoinVietnam\\Blinktrade\\Response\\CreateOrder',
+            'json'
+        );
+    }
 
     /**
      * @param string$clientOrderId
@@ -265,6 +287,18 @@ class Client
             $this->url,
             ['headers' => $headers, 'json' => $this->apiM()->serializer()->toArray($request)]
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function createUniqueOrderId()
+    {
+        $orderId = microtime(true) / 9;
+        $orderId = (string) $orderId;
+        $orderId = str_replace('.', '', $orderId);
+
+        return $orderId;
     }
 
     /**

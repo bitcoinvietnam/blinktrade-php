@@ -53,6 +53,16 @@ class Blinktrade
     /** Chilebit */
     const BROKERID_CHILEBIT = 9;
 
+    /** Symbols */
+    const SYMBOLS = [
+        1 => 'BTCVEF',
+        3 => 'BTCVND',
+        4 => 'BTCBRL',
+        5 => 'BTCUSD',
+        8 => 'BTCPKR',
+        9 => 'BTCCLP'
+    ];
+
     // Order sides
 
     /** Buy */
