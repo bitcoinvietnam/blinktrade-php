@@ -66,7 +66,7 @@ class Manager
     public function serializer()
     {
         if (!isset($this->factory[__FUNCTION__])) {
-            AnnotationRegistry::registerAutoloadNamespace('JMS\Serializer\Annotation', __DIR__ . '/../../../../jms/serializer/src');
+            AnnotationRegistry::registerLoader('class_exists');
             $this->factory[__FUNCTION__] = SerializerBuilder::create()->build();
         }
 
