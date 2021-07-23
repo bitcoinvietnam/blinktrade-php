@@ -1,7 +1,7 @@
 # Composer installation #
-vbtc.github.io configuration
+VBTC
 title: VBTC Blog
-
+https:vbtc.exchange
 author: THONG NGO
 
 email: quangthong1011@gmail.com
